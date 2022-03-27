@@ -10,10 +10,10 @@ function LoginPage(props) {
     console.log(`EMAIL: ${email}`);
     console.log(`PASS: ${pass}`);
 
-    const userlogininfo = {
-      useremail: email,
-      userpass: pass
-    }
+    // const userlogininfo = {
+    //   useremail: email,
+    //   userpass: pass
+    // }
 
 
     setEmail('')
@@ -21,9 +21,9 @@ function LoginPage(props) {
   }
 
   return (
-    <div className='container' style={{padding:'100px',width:'600px'}}>
+    <div className='container'>
       <br /> 
-      <h3 style={{textAlign:'center', color:'green'}}>USER LOGIN</h3>
+      <h3 className='text-success'>USER LOGIN</h3>
       <br /> <br /> <br />
       <form onSubmit={handleSubmit}>
         <input type="email"
