@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import './App.css'
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
@@ -22,7 +22,7 @@ function LoginPage(props) {
   }
 
   return (
-    <div className='container' style={{padding:'150px',width:'600px'}}>
+    <div className='container' style={{padding:'100px',width:'600px'}}>
       <br /> 
       <h3 style={{textAlign:'center', color:'green'}}>USER LOGIN</h3>
       <br /> <br /> <br />
