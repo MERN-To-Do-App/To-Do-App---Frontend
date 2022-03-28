@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import {Link} from 'react-router-dom'
 function SignUpForm() {
   const [name, setName] = useState("");
   const [isError, setIsError] = useState("");
@@ -9,22 +10,21 @@ function SignUpForm() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(`Registered Successfully:`);
-    console.log(`NAME: ${name}`);
-    console.log(`EMAIL: ${email}`);
+    // console.log(`Registered Successfully:`);
+    // console.log(`NAME: ${name}`);
+    // console.log(`EMAIL: ${email}`);
 
     const userinfo = {
-        name: name,
-        email: email,
-        password: pass,
-        confirmPassword: confpass
-    }
+      name: name,
+      email: email,
+      password: pass,
+      confirmPassword: confpass,
+    };
 
-    axios.post('http://localhost:5000/api/signUp',userinfo)
-    .then(res=>{
+    axios.post("http://localhost:5000/api/signUp", userinfo).then((res) => {
       console.log(res.data);
-      setIsError(res.data.msg || "Registration Successful")
-    })
+      setIsError(res.data.msg || "Registration Successful. Now try logging in");
+    });
 
     setName("");
     setEmail("");
@@ -32,7 +32,7 @@ function SignUpForm() {
     setconfPass("");
   };
   const checkpassword = (e) => {
-    const confirmPass = e.target.value
+    const confirmPass = e.target.value;
     setconfPass(confirmPass);
     if (pass !== confirmPass) {
       setIsError("Password is not Matched");
@@ -43,10 +43,9 @@ function SignUpForm() {
 
   return (
     <div className="container signup-container">
-      <h3 className="signup-text"> SignUp</h3>
+      <h3 className="signup-text"> Sign Up</h3>
       <br />
       <form onSubmit={handleSubmit}>
-        <label className="label-text">Name</label>
         <input
           className="form-control form-control-sm"
           type="text"
@@ -56,7 +55,6 @@ function SignUpForm() {
           required
         />
 
-        <label className="label-text">Email</label>
         <input
           className="form-control form-control-sm"
           type="email"
@@ -66,7 +64,6 @@ function SignUpForm() {
           required
         />
 
-        <label className="label-text">Create Password</label>
         <input
           className="form-control form-control-sm"
           type="Password"
@@ -76,7 +73,6 @@ function SignUpForm() {
           required
         />
 
-        <label className="label-text">Confirm Password</label>
         <input
           className="form-control form-control-sm"
           type="Password"
@@ -86,10 +82,22 @@ function SignUpForm() {
           required
         />
         <div className="text-danger">{isError}</div>
-        <br></br>
-        <button type="submit" className="btn btn-lg btn-outline-primary rounded-pill">
+        <button
+          type="submit"
+          className="btn btn-lg btn-outline-primary rounded-pill"
+        >
           Sign Up
         </button>
+        <div class="form-row">
+          <div class="form-group col-md-12 foot-text">
+            <p>
+              Already have an account ?
+              <Link to="/login">
+                Login
+              </Link>
+            </p>
+          </div>
+        </div>
       </form>
     </div>
   );
