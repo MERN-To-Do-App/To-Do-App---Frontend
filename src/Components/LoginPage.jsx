@@ -21,9 +21,9 @@ function LoginPage(props) {
   }
 
   return (
-    <div className='container'>
+    <div className='container login-container'>
       <br /> 
-      <h3 className='text-success'>USER LOGIN</h3>
+      <h3 className="user-login">USER LOGIN</h3>
       <br /> <br /> <br />
       <form onSubmit={handleSubmit}>
         <input type="email"
@@ -41,7 +41,7 @@ function LoginPage(props) {
           placeholder="ENTER PASSWORD"
           required />
         <br />
-        <input type="submit" value="LOGIN" className="btn btn-success" />
+        <input type="submit" value="LOGIN" className="btn btn-lg btn-outline-success rounded-pill" />
       </form>
     </div>
   )

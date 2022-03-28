@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginPage from "./Components/LoginPage";
 import SignUpForm from "./Components/SignUpForm";
 import LandingPage from "./Components/LandingPage";
-// import './App.css'
+import './App.css'
 
 function App() {
   return (
