@@ -17,6 +17,7 @@ function LandingPage() {
           <button>Sign up</button>
         </Link>
       </div>
+      
     </div>
   );
 }
