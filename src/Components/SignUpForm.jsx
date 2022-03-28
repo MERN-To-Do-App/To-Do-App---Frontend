@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 function SignUpForm() {
   const [name, setName] = useState("");
@@ -12,12 +13,18 @@ function SignUpForm() {
     console.log(`NAME: ${name}`);
     console.log(`EMAIL: ${email}`);
 
-    // const userinfo = {
-    //     username: name,
-    //     useremail: email,
-    //     userpass: pass,
-    //     userconfpass: confpass
-    // }
+    const userinfo = {
+        name: name,
+        email: email,
+        password: pass,
+        confirmPassword: confpass
+    }
+
+    axios.post('http://localhost:5000/api/signUp',userinfo)
+    .then(res=>{
+      console.log(res.data);
+      setIsError(res.data.msg || "Registration Successful")
+    })
 
     setName("");
     setEmail("");
@@ -25,8 +32,9 @@ function SignUpForm() {
     setconfPass("");
   };
   const checkpassword = (e) => {
-    setconfPass(e.target.value);
-    if (pass !== confpass) {
+    const confirmPass = e.target.value
+    setconfPass(confirmPass);
+    if (pass !== confirmPass) {
       setIsError("Password is not Matched");
     } else {
       setIsError("");
@@ -73,7 +81,7 @@ function SignUpForm() {
           className="form-control form-control-sm"
           type="Password"
           value={confpass}
-          onChange={(e) => checkpassword(e)}
+          onChange={checkpassword}
           placeholder="Confirm Password"
           required
         />
