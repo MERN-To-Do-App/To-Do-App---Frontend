@@ -6,7 +6,7 @@ html, body{
     height: 100%;
     width: 100%;
     background-color: #6161c5;
-    background-image: url("https://www.transparenttextures.com/patterns/diagmonds.png");
+    background-image: url("https://www.transparenttextures.com/patterns/pw-pattern.png");
     font-family: 'Barlow Condensed', sans-serif;
 }
 
@@ -14,12 +14,12 @@ html, body{
 
 .container{
     position: relative;
-    top: 10rem;
-    padding: 40px 50px 70px 50px;
+    top: 10vh;
+    padding: 2% 5%;
     margin: auto;
     width : 90%;
     max-width: 450px;
-    background-color: rgba(230, 230, 230, 0.692);
+    background-color: rgb(192, 177, 76);
     color: #1a3d55;
     border-radius: 20px;
 }
@@ -31,15 +31,15 @@ html, body{
     background-color: transparent;
     border: 0;
     border-radius: 0;
-    border-bottom: 2px solid #fff;
-    color: #fff;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
     font-weight: 400;
     font-size: 1.1rem;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
 }
 
 .form-control::placeholder {
-    color: #fff;
+    color: rgb(0, 0, 0);
     opacity: 0.8;
   }
 
@@ -47,8 +47,8 @@ html, body{
     background-color: transparent;
     border: 0;
     border-radius: 0;
-    border-bottom: 2px solid #fff;
-    color: #fff;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
     box-shadow: none;
 }
 
@@ -65,14 +65,10 @@ html, body{
 .welcome-text,
 .user-login {
     font-family: 'Patua One', cursive;
-    color:#1a3d55;
+    color:#000000;
 }
 
 /* SignUp page CSS */
-.signup-container{
-    position: relative;
-    top: 6rem;
-}
 .label-text {
     margin-top: 1rem;
     margin-bottom: .25rem;
@@ -80,24 +76,34 @@ html, body{
     font-size: 1.15rem;
 }
 .signup-text{
-    color:#1a3d55;
+    color:#000000;
     font-family: 'Patua One', cursive;
 }
 
 .foot-text{
     margin-top: 30px;
-    color: #666;
+    color: #7c7c7c;
+}
+
+.foot-text:hover{
+    color: #000000;
 }
 
 .foot-text a{
     text-decoration: none;
     margin-left: 5px;
-    background-color: rgb(219, 219, 219);
+    background-color: rgba(219, 219, 219, 0.493);
     padding: 5px;
     border-radius: 20px;
-    color: #999;
+    color: inherit;
 }
 
-.foot-text a:hover{
-    color: #000;
+.copyright-text{
+    color: #999999;
+    font-weight: 500;
+    font-size: 1.1rem;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    margin: auto;
 }

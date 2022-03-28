@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import {Link} from 'react-router-dom'
-function SignUpForm() {
+function SignUpForm(props) {
   const [name, setName] = useState("");
   const [isError, setIsError] = useState("");
   const [email, setEmail] = useState("");
@@ -10,9 +10,6 @@ function SignUpForm() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // console.log(`Registered Successfully:`);
-    // console.log(`NAME: ${name}`);
-    // console.log(`EMAIL: ${email}`);
 
     const userinfo = {
       name: name,
@@ -21,10 +18,14 @@ function SignUpForm() {
       confirmPassword: confpass,
     };
 
-    axios.post("http://localhost:5000/api/signUp", userinfo).then((res) => {
-      console.log(res.data);
-      setIsError(res.data.msg || "Registration Successful. Now try logging in");
-    });
+    axios.post("http://localhost:5000/api/signUp", userinfo)
+    .then((res) => {
+      setIsError(res.data.msg ||"Registration Successful. Now try logging in");
+      props.history.push(`/todo/${res.data._id}`)
+    })
+    .catch((error)=>{
+      setIsError(error.response.data.msg);
+    })
 
     setName("");
     setEmail("");
@@ -81,15 +82,15 @@ function SignUpForm() {
           placeholder="Confirm Password"
           required
         />
-        <div className="text-danger">{isError}</div>
+        <div className="error-text text-danger">{isError}</div>
         <button
           type="submit"
-          className="btn btn-lg btn-outline-primary rounded-pill"
+          className="btn btn-lg btn-outline-dark rounded-pill"
         >
           Sign Up
         </button>
-        <div class="form-row">
-          <div class="form-group col-md-12 foot-text">
+        <div className="form-row">
+          <div className="form-group col-md-12 foot-text">
             <p>
               Already have an account ?
               <Link to="/login">

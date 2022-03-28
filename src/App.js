@@ -5,6 +5,7 @@ import LoginPage from "./Components/LoginPage";
 import SignUpForm from "./Components/SignUpForm";
 import LandingPage from "./Components/LandingPage";
 import './App.css'
+import Copyright from "./Components/Copyright";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signUp" component={SignUpForm} />
         <Route path="/" component={LandingPage} />
       </Switch>
+      <Copyright/>
     </Router>
   );
 }

@@ -46,10 +46,10 @@ function LoginPage(props) {
         <input
           type="submit"
           value="Log In"
-          className="btn btn-lg btn-outline-success rounded-pill"
+          className="btn btn-lg btn-outline-dark rounded-pill"
         />
-        <div class="form-row">
-          <div class="form-group col-md-12 foot-text">
+        <div className="form-row">
+          <div className="form-group col-md-12 foot-text">
             <p>
               New User?
               <Link to="/signUp">
