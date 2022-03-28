@@ -42,11 +42,11 @@ function SignUpForm() {
   };
 
   return (
-    <div>
-      <h3 className="text-primary"> SignUp</h3>
+    <div className="container signup-container">
+      <h3 className="signup-text"> SignUp</h3>
       <br />
       <form onSubmit={handleSubmit}>
-        <label>Name:</label>
+        <label className="label-text">Name</label>
         <input
           className="form-control form-control-sm"
           type="text"
@@ -56,7 +56,7 @@ function SignUpForm() {
           required
         />
 
-        <label>Email:</label>
+        <label className="label-text">Email</label>
         <input
           className="form-control form-control-sm"
           type="email"
@@ -66,7 +66,7 @@ function SignUpForm() {
           required
         />
 
-        <label>Create Password:</label>
+        <label className="label-text">Create Password</label>
         <input
           className="form-control form-control-sm"
           type="Password"
@@ -76,7 +76,7 @@ function SignUpForm() {
           required
         />
 
-        <label>Confirm Password:</label>
+        <label className="label-text">Confirm Password</label>
         <input
           className="form-control form-control-sm"
           type="Password"
@@ -87,7 +87,7 @@ function SignUpForm() {
         />
         <div className="text-danger">{isError}</div>
         <br></br>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-lg btn-outline-primary rounded-pill">
           Sign Up
         </button>
       </form>
