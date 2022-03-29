@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 function SignUpForm(props) {
   const [name, setName] = useState("");
   const [isError, setIsError] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confpass, setconfPass] = useState("");
-
+  const history = useHistory()
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
@@ -21,10 +21,10 @@ function SignUpForm(props) {
     axios.post("http://localhost:5000/api/signUp", userinfo)
     .then((res) => {
       setIsError(res.data.msg ||"Registration Successful. Now try logging in");
-      props.history.push(`/todo/${res.data._id}`)
+      history.push(`/user`)
     })
     .catch((error)=>{
-      setIsError(error.response.data.msg);
+      setIsError(error.response.data.error.message);
     })
 
     setName("");

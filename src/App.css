@@ -98,6 +98,10 @@ html, body{
     color: inherit;
 }
 
+.error-text{
+    margin-bottom: 10px;
+}
+
 .copyright-text{
     color: #999999;
     font-weight: 500;

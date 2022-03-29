@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginPage from "./Components/LoginPage";
 import SignUpForm from "./Components/SignUpForm";
 import LandingPage from "./Components/LandingPage";
-import './App.css'
 import Copyright from "./Components/Copyright";
+import Home from "./Components/home"
+import './App.css'
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/signUp" component={SignUpForm} />
-        <Route path="/" component={LandingPage} />
+        <Route path="/user" component={Home} />
+        <Route exact path="/" component={LandingPage} />
       </Switch>
       <Copyright/>
     </Router>

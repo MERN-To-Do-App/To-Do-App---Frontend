@@ -1,20 +1,28 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
+import axios from "axios";
+import {Link, useHistory} from 'react-router-dom'
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [isError, setIsError] = useState("");
+  const history = useHistory()
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    console.log(`EMAIL: ${email}`);
-    console.log(`PASS: ${pass}`);
+    const userinfo = {
+      email: email,
+      password: pass
+    }
 
-    // const userlogininfo = {
-    //   useremail: email,
-    //   userpass: pass
-    // }
+    axios.post("http://localhost:5000/api/login", userinfo)
+    .then((res) => {
+      history.push(`/user`)
+    })
+    .catch((error)=>{
+      setIsError("Invalid email / password")
+    })
 
     setEmail("");
     setPass("");
@@ -43,6 +51,7 @@ function LoginPage(props) {
           placeholder="Enter Password"
           required
         />
+        <div className="error-text text-danger">{isError}</div>
         <input
           type="submit"
           value="Log In"
