@@ -16,9 +16,10 @@ function LoginPage(props) {
       password: pass
     }
 
-    axios.post("http://localhost:5000/api/login", userinfo)
+    axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, userinfo)
     .then((res) => {
-      history.push(`/user`)
+      const id = res.data.user._id
+      history.push(`/user/${id}`)
     })
     .catch((error)=>{
       setIsError("Invalid email / password")

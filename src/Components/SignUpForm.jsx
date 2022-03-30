@@ -18,10 +18,11 @@ function SignUpForm(props) {
       confirmPassword: confpass,
     };
 
-    axios.post("http://localhost:5000/api/signUp", userinfo)
+    axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/signUp`, userinfo)
     .then((res) => {
+      const id = res.data.user._id
       setIsError(res.data.msg ||"Registration Successful. Now try logging in");
-      history.push(`/user`)
+      history.push(`/user/${id}`)
     })
     .catch((error)=>{
       setIsError(error.response.data.error.message);

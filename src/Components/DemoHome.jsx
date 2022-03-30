@@ -1,23 +1,28 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-function home() {
-
-
-  axios.get("http://localhost:5000/api/user")
-  .then((res)=>{
-    console.log(...res);
-  })
-  .catch((error)=>{
-    console.log(...error);
-  })
+function Home({ user, setUser }) {
   
+  const { id } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_ENDPOINT}/api/user/${id}`)
+      .then((res) => {
+        const userDetails = res.data.user;
+        setUser(userDetails);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  }, []);
 
   return (
     <div>
-      <h1>Hello</h1>
+      <h1>Hello {user.name}</h1>
     </div>
   );
 }
 
-export default home;
+export default Home;
