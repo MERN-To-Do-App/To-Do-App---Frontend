@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
+import axios from "axios";
+import {Link, useHistory} from 'react-router-dom'
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [isError, setIsError] = useState("");
+  const history = useHistory()
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    console.log(`EMAIL: ${email}`);
-    console.log(`PASS: ${pass}`);
+    const userinfo = {
+      email: email,
+      password: pass
+    }
 
-    // const userlogininfo = {
-    //   useremail: email,
-    //   userpass: pass
-    // }
+    axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, userinfo)
+    .then((res) => {
+      const id = res.data.user._id
+      history.push(`/user/${id}`)
+    })
+    .catch((error)=>{
+      setIsError("Invalid email / password")
+    })
 
     setEmail("");
     setPass("");
@@ -43,13 +52,14 @@ function LoginPage(props) {
           placeholder="Enter Password"
           required
         />
+        <div className="error-text text-danger">{isError}</div>
         <input
           type="submit"
           value="Log In"
-          className="btn btn-lg btn-outline-success rounded-pill"
+          className="btn btn-lg btn-outline-dark rounded-pill"
         />
-        <div class="form-row">
-          <div class="form-group col-md-12 foot-text">
+        <div className="form-row">
+          <div className="form-group col-md-12 foot-text">
             <p>
               New User?
               <Link to="/signUp">

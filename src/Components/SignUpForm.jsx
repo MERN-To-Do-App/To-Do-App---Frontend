@@ -1,18 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
-function SignUpForm() {
+import {Link, useHistory} from 'react-router-dom'
+function SignUpForm(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confpass, setconfPass] = useState("");
+<<<<<<< HEAD
   const [isError, setIsError] = useState("");
 
+=======
+  const history = useHistory()
+>>>>>>> d9069de1392dfd363a85c6c67aef1ee3129c5449
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // console.log(`Registered Successfully:`);
-    // console.log(`NAME: ${name}`);
-    // console.log(`EMAIL: ${email}`);
 
     const userinfo = {
       name: name,
@@ -21,10 +22,15 @@ function SignUpForm() {
       confirmPassword: confpass
     };
 
-    axios.post("http://localhost:5000/api/signUp", userinfo).then((res) => {
-      console.log(res.data);
-      setIsError(res.data.msg || "Registration Successful. Now try logging in");
-    });
+    axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/signUp`, userinfo)
+    .then((res) => {
+      const id = res.data.user._id
+      setIsError(res.data.msg ||"Registration Successful. Now try logging in");
+      history.push(`/user/${id}`)
+    })
+    .catch((error)=>{
+      setIsError(error.response.data.error.message);
+    })
 
     setName("");
     setEmail("");
@@ -81,15 +87,15 @@ function SignUpForm() {
           placeholder="Confirm Password"
           required
         />
-        <div className="text-danger">{isError}</div>
+        <div className="error-text text-danger">{isError}</div>
         <button
           type="submit"
-          className="btn btn-lg btn-outline-primary rounded-pill"
+          className="btn btn-lg btn-outline-dark rounded-pill"
         >
           Sign Up
         </button>
-        <div class="form-row">
-          <div class="form-group col-md-12 foot-text">
+        <div className="form-row">
+          <div className="form-group col-md-12 foot-text">
             <p>
               Already have an account ?
               <Link to="/login">
