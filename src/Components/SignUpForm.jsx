@@ -1,23 +1,30 @@
+import axios from "axios";
 import React, { useState } from "react";
+import {Link} from 'react-router-dom'
 function SignUpForm() {
   const [name, setName] = useState("");
-  const [isError, setIsError] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confpass, setconfPass] = useState("");
+  const [isError, setIsError] = useState("");
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(`Registered Successfully:`);
-    console.log(`NAME: ${name}`);
-    console.log(`EMAIL: ${email}`);
+    // console.log(`Registered Successfully:`);
+    // console.log(`NAME: ${name}`);
+    // console.log(`EMAIL: ${email}`);
 
-    // const userinfo = {
-    //     username: name,
-    //     useremail: email,
-    //     userpass: pass,
-    //     userconfpass: confpass
-    // }
+    const userinfo = {
+      name: name,
+      email: email,
+      password: pass,
+      confirmPassword: confpass
+    };
+
+    axios.post("http://localhost:5000/api/signUp", userinfo).then((res) => {
+      console.log(res.data);
+      setIsError(res.data.msg || "Registration Successful. Now try logging in");
+    });
 
     setName("");
     setEmail("");
@@ -25,8 +32,9 @@ function SignUpForm() {
     setconfPass("");
   };
   const checkpassword = (e) => {
-    setconfPass(e.target.value);
-    if (pass !== confpass) {
+    const confirmPass = e.target.value;
+    setconfPass(confirmPass);
+    if (pass !== confirmPass) {
       setIsError("Password is not Matched");
     } else {
       setIsError("");
@@ -34,11 +42,10 @@ function SignUpForm() {
   };
 
   return (
-    <div>
-      <h3 className="text-primary"> SignUp</h3>
+    <div className="container signup-container">
+      <h3 className="signup-text"> Sign Up</h3>
       <br />
       <form onSubmit={handleSubmit}>
-        <label>Name:</label>
         <input
           className="form-control form-control-sm"
           type="text"
@@ -48,7 +55,6 @@ function SignUpForm() {
           required
         />
 
-        <label>Email:</label>
         <input
           className="form-control form-control-sm"
           type="email"
@@ -58,7 +64,6 @@ function SignUpForm() {
           required
         />
 
-        <label>Create Password:</label>
         <input
           className="form-control form-control-sm"
           type="Password"
@@ -68,20 +73,31 @@ function SignUpForm() {
           required
         />
 
-        <label>Confirm Password:</label>
         <input
           className="form-control form-control-sm"
           type="Password"
           value={confpass}
-          onChange={(e) => checkpassword(e)}
+          onChange={checkpassword}
           placeholder="Confirm Password"
           required
         />
         <div className="text-danger">{isError}</div>
-        <br></br>
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          className="btn btn-lg btn-outline-primary rounded-pill"
+        >
           Sign Up
         </button>
+        <div class="form-row">
+          <div class="form-group col-md-12 foot-text">
+            <p>
+              Already have an account ?
+              <Link to="/login">
+                Login
+              </Link>
+            </p>
+          </div>
+        </div>
       </form>
     </div>
   );
