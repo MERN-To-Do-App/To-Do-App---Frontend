@@ -16,6 +16,7 @@ function Home({ user, setUser }) {
       .catch((error) => {
         console.log(error.response);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
