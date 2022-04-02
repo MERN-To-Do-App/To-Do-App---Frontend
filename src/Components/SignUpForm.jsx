@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import {Link, useHistory} from 'react-router-dom'
 function SignUpForm(props) {
   const [name, setName] = useState("");
-  const [isError, setIsError] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confpass, setconfPass] = useState("");
+<<<<<<< HEAD
+  const [isError, setIsError] = useState("");
+
+=======
   const history = useHistory()
+>>>>>>> d9069de1392dfd363a85c6c67aef1ee3129c5449
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
@@ -15,7 +19,7 @@ function SignUpForm(props) {
       name: name,
       email: email,
       password: pass,
-      confirmPassword: confpass,
+      confirmPassword: confpass
     };
 
     axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/signUp`, userinfo)

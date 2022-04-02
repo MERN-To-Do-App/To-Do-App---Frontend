@@ -17,6 +17,7 @@ function LandingPage() {
           <button className="btn btn-lg btn-primary rounded-pill">Sign up</button>
         </Link>
       </div>
+      
     </div>
   );
 }
