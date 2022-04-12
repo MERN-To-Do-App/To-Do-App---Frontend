@@ -6,12 +6,10 @@ function SignUpForm(props) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confpass, setconfPass] = useState("");
-<<<<<<< HEAD
   const [isError, setIsError] = useState("");
 
-=======
+
   const history = useHistory()
->>>>>>> d9069de1392dfd363a85c6c67aef1ee3129c5449
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
@@ -25,11 +23,13 @@ function SignUpForm(props) {
     axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/signUp`, userinfo)
     .then((res) => {
       const id = res.data.user._id
+      props.setUser(res.data.user)
       setIsError(res.data.msg ||"Registration Successful. Now try logging in");
       history.push(`/user/${id}`)
     })
     .catch((error)=>{
-      setIsError(error.response.data.error.message);
+      const errorMsg = error.response.data.msg
+      setIsError(errorMsg)
     })
 
     setName("");

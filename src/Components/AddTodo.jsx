@@ -1,57 +1,86 @@
-import React,{useState,useEffect} from 'react'
-import Todoitems from './TodoItems';
-import TextField from '@mui/material/TextField';
-import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import React, { useState, useEffect } from "react";
+import Todoitems from "./TodoItems";
+import { isUndefined } from "lodash";
+import axios from "axios";
 
-const getLocalItems = () =>{
-    let list =localStorage.getItem('lists');
-    console.log(list)
-    if(list){
-        return JSON.parse(list);
-    } else{
-        return [];
-    }
-}
-function AddTodo() {
-    const [list,setList] = useState("");
-    const [items,setItems] = useState( getLocalItems());
+function AddTodo({ id, user, title }) {
+  const [itemName, setItemName] = useState("");
+  const [items, setItems] = useState([]);
+  const TaskEvent = (e) => {
+    const val = e.target.value;
+    setItemName(val);
+  };
 
-    const TaskEvent = (e) => {
-        setList(e.target.value);
-    };
+  const addItems = () => {
+    if(itemName==="") return;
+    axios
+      .post(`${process.env.REACT_APP_API_ENDPOINT}/api/user/${id}/item`, {
+        itemName: itemName,
+        listName: isUndefined(title) ? "My Day" : title,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    setItems((oldItems) => {
+      return [...oldItems, itemName];
+    });
+    setItemName("");
+  };
 
-    const AddtoList = () => {
-        setItems((oldItems) =>{
-            return [...oldItems,list]
-        })
-    setList("")
-    };
-    const deleteItems = (id) => {
-        setItems((oldItems) => {
-            return oldItems.filter((val,index) => {
-                return index !== id
-            });
-        });
-    };
-    useEffect(() => {
-        localStorage.setItem('lists', JSON.stringify(items))
-    },[items]);
+  const deleteItems = (id) => {
+    setItems((oldItems) => {
+      return oldItems.filter((val, index) => {
+        return index !== id;
+      });
+    });
+  };
+  useEffect(() => {
+    const newItems =
+      user.lists.filter(
+        (list) => list.name === (isUndefined(title) ? "My Day" : title)
+      ).length === 0
+        ? []
+        : user.lists.filter(
+            (list) => list.name === (isUndefined(title) ? "My Day" : title)
+          )[0].items;
+    setItems(newItems);
+  }, [user.lists, title]);
 
   return (
-    <div className='Todocontainer'>
-      <h2>Add New Todo</h2>
-      <TextField id="standard-basic" variant="standard" label='Add New Task' onChange={TaskEvent} />
-      <AddCircleOutlineSharpIcon onClick={AddtoList}/>
-      
-         {
-         items.map((interval,index) => {
-             return <Todoitems key={index} id={index} text ={interval} onSelect = {deleteItems}
-             />
-         })
-         } 
-    
+    <div className="Todocontainer">
+      <h2 className="add-new-heading">Add New Todo</h2>
+      <div className="input-box">
+        <div className="form-floating">
+          <input
+            type="text"
+            className="form-control"
+            id="floatingInput"
+            autoComplete="off"
+            value={itemName}
+            onChange={TaskEvent}
+            placeholder="enter item..."
+          />
+          <label htmlFor="floatingInput">Add New Task</label>
+        </div>
+        <button id="add-btn" onClick={addItems}>
+          +
+        </button>
+      </div>
+      {items.map((interval, index) => {
+        return (
+          <Todoitems
+            key={index}
+            id={index}
+            text={interval}
+            onSelect={deleteItems}
+          />
+        );
+      })}
     </div>
-  )
+  );
 }
 
-export default AddTodo
+export default AddTodo;

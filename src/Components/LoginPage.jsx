@@ -19,6 +19,7 @@ function LoginPage(props) {
     axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, userinfo)
     .then((res) => {
       const id = res.data.user._id
+      props.setUser(res.data.user);
       history.push(`/user/${id}`)
     })
     .catch((error)=>{

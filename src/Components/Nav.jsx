@@ -1,21 +1,38 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import Clock from "./Clock";
 
-function Nav() {
+import "./styles/Nav.css";
+
+function Nav({ setUser }) {
+  const { id } = useParams();
+
   return (
     <div>
-       <nav className="navbar navbar-expand-lg navbar-light bg-primary">
-
-           <Link className="nav-link active" aria-current="page" to="#" style={{color:'White'}}>To DO</Link>
-         <form className="d-flex" >
-           <input className="form-control-sm" aria-label=".form-control-sm example" type="search" placeholder="Search"/>
-           <button className="btn btn-light btn-sm btn-outline-success" type="submit">Search</button>
-         </form>
-    
+      <nav className="navbar nav-top navbar-expand-lg">
+        <Link
+          className="brand-name nav-link active"
+          aria-current="page"
+          to={`/user/${id}`}
+        >
+          To Do
+        </Link>
+        <div className="nav-elements">
+          <Clock/>
+          <Link
+            className="nav-element-item nav-link"
+            aria-current="page"
+            to={`/`}
+            onClick={() => {
+              setUser(null);
+            }}
+          >
+            Log out
+          </Link>
+        </div>
       </nav>
     </div>
-  )
+  );
 }
 
-export default Nav
-
+export default Nav;

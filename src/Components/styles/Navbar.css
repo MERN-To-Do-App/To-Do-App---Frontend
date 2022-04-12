@@ -1,0 +1,41 @@
+.nav-side-container{
+    width: fit-content;
+    display: inline;
+    margin: 0;
+    z-index: 5;
+}
+
+.nav-side{
+    z-index: 5;
+    transition: 600ms; 
+    width: fit-content;
+    left: 1%;
+}
+
+.nav-side a{
+    color: #fff;
+}
+
+ul{
+    list-style: none;
+}
+
+
+.add-list{
+    margin-top: 5%;
+    background-color: transparent;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 2px;
+    line-height: 20px;
+}
+
+.add{
+    border-radius: 20px;
+    width: 34px;
+    transform: translateY(-1px);
+    line-height: 20px;
+    padding: 5px;
+    padding-top: 3px;
+    margin-left: 5px;
+    font-size: 2rem;
+}
