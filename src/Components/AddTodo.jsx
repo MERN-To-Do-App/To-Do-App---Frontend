@@ -3,39 +3,43 @@ import Todoitems from "./TodoItems";
 import { isUndefined } from "lodash";
 import axios from "axios";
 
-function AddTodo({ id, user, title }) {
+function AddTodo({ id, user, title, items, setItems, getUser }) {
   const [itemName, setItemName] = useState("");
-  const [items, setItems] = useState([]);
+
   const TaskEvent = (e) => {
     const val = e.target.value;
     setItemName(val);
   };
 
   const addItems = () => {
-    if(itemName==="") return;
+    if (itemName === "") return;
     axios
       .post(`${process.env.REACT_APP_API_ENDPOINT}/api/user/${id}/item`, {
         itemName: itemName,
         listName: isUndefined(title) ? "My Day" : title,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        getUser();
       })
       .catch((error) => {
         console.log(error.response);
       });
-    setItems((oldItems) => {
-      return [...oldItems, itemName];
-    });
     setItemName("");
   };
 
-  const deleteItems = (id) => {
-    setItems((oldItems) => {
-      return oldItems.filter((val, index) => {
-        return index !== id;
+  const deleteItems = (itemId) => {
+    axios
+      .delete(`${process.env.REACT_APP_API_ENDPOINT}/api/user/${id}/item`, {
+        data: { itemId: itemId, listName: isUndefined(title) ? "My Day" : title },
+      })
+      .then((res) => {
+        // console.log(res.data);
+        getUser();
+      })
+      .catch((error) => {
+        console.log(error.response);
       });
-    });
   };
   useEffect(() => {
     const newItems =
@@ -47,7 +51,7 @@ function AddTodo({ id, user, title }) {
             (list) => list.name === (isUndefined(title) ? "My Day" : title)
           )[0].items;
     setItems(newItems);
-  }, [user.lists, title]);
+  }, [user.lists, title, setItems]);
 
   return (
     <div className="Todocontainer">
@@ -69,16 +73,20 @@ function AddTodo({ id, user, title }) {
           +
         </button>
       </div>
-      {items.map((interval, index) => {
-        return (
-          <Todoitems
-            key={index}
-            id={index}
-            text={interval}
-            onSelect={deleteItems}
-          />
-        );
-      })}
+      {items.length > 0 &&
+        items
+          .slice(0)
+          .reverse()
+          .map((item, index) => {
+            return (
+              <Todoitems
+                key={item._id}
+                id={item._id}
+                text={item.name}
+                deleteItems={deleteItems}
+              />
+            );
+          })}
     </div>
   );
 }

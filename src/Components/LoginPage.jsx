@@ -1,30 +1,40 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {Link, useHistory} from 'react-router-dom'
+import { Link, useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [isError, setIsError] = useState("");
-  const history = useHistory()
+  const history = useHistory();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     const userinfo = {
       email: email,
-      password: pass
-    }
+      password: pass,
+    };
 
-    axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, userinfo)
-    .then((res) => {
-      const id = res.data.user._id
-      props.setUser(res.data.user);
-      history.push(`/user/${id}`)
-    })
-    .catch((error)=>{
-      setIsError("Invalid email / password")
-    })
+    axios
+      .post(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, userinfo)
+      .then((res) => {
+        const id = res.data.user._id;
+        props.setUser(res.data.user);
+        history.push(`/user/${id}`);
+      })
+      .catch((error) => {
+        toast.error("Invalid email / password", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+      });
 
     setEmail("");
     setPass("");
@@ -53,19 +63,17 @@ function LoginPage(props) {
           placeholder="Enter Password"
           required
         />
-        <div className="error-text text-danger">{isError}</div>
         <input
           type="submit"
           value="Log In"
           className="btn btn-lg btn-outline-dark rounded-pill"
         />
+        <ToastContainer closeOnClick />
         <div className="form-row">
           <div className="form-group col-md-12 foot-text">
             <p>
               New User?
-              <Link to="/signUp">
-                Sign Up
-              </Link>
+              <Link to="/signUp">Sign Up</Link>
             </p>
           </div>
         </div>

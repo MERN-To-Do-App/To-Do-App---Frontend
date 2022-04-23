@@ -1,18 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
 import {Link, useHistory} from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function SignUpForm(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confpass, setconfPass] = useState("");
-  const [isError, setIsError] = useState("");
 
 
   const history = useHistory()
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
     const userinfo = {
       name: name,
       email: email,
@@ -24,27 +25,25 @@ function SignUpForm(props) {
     .then((res) => {
       const id = res.data.user._id
       props.setUser(res.data.user)
-      setIsError(res.data.msg ||"Registration Successful. Now try logging in");
       history.push(`/user/${id}`)
     })
     .catch((error)=>{
       const errorMsg = error.response.data.msg
-      setIsError(errorMsg)
+      toast.error(errorMsg, {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
     })
 
     setName("");
     setEmail("");
     setPass("");
     setconfPass("");
-  };
-  const checkpassword = (e) => {
-    const confirmPass = e.target.value;
-    setconfPass(confirmPass);
-    if (pass !== confirmPass) {
-      setIsError("Password is not Matched");
-    } else {
-      setIsError("");
-    }
   };
 
   return (
@@ -83,17 +82,17 @@ function SignUpForm(props) {
           className="form-control form-control-sm"
           type="Password"
           value={confpass}
-          onChange={checkpassword}
+          onChange={e=>setconfPass(e.target.value)}
           placeholder="Confirm Password"
           required
         />
-        <div className="error-text text-danger">{isError}</div>
         <button
           type="submit"
           className="btn btn-lg btn-outline-dark rounded-pill"
         >
           Sign Up
         </button>
+        <ToastContainer closeOnClick />
         <div className="form-row">
           <div className="form-group col-md-12 foot-text">
             <p>

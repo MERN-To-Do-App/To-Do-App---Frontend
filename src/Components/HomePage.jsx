@@ -12,24 +12,24 @@ function HomePage({user, setUser}) {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   const [sideBarData, setSideBarData] = useState([...user.lists]);
   const { id, title } = useParams();
+  const [items, setItems] = useState([]);
+  function getUser(){
+    axios
+      .get(`${process.env.REACT_APP_API_ENDPOINT}/api/user/${id}`)
+      .then((res) => {
+        const userDetails = res.data.user;
+        console.log('got user');
+        setUser(userDetails);
+        setSideBarData([...userDetails.lists])
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  }
   useEffect(() => {
-    function getUser(){
-      axios
-        .get(`${process.env.REACT_APP_API_ENDPOINT}/api/user/${id}`)
-        .then((res) => {
-          const userDetails = res.data.user;
-          console.log('got user');
-          setUser(userDetails);
-          setSideBarData([...userDetails.lists])
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
-    }
     getUser()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title]);
-
+  }, [title,id,setUser,setItems]);
 
 
   return (
@@ -38,9 +38,8 @@ function HomePage({user, setUser}) {
         <Navbar id={id} user={user} sideBarData={sideBarData} setSideBarData={setSideBarData}/>
         <h2 className='title-text'>{title ? _.capitalize(title) : `Hello ${user.name.split(" ")[0]}, Happy ${days[new Date().getDay()]}`}</h2>
         <br/>
-        <AddTodo id={id} user={user} title={title}/>
-      
-    </div> 
+        <AddTodo getUser={getUser} items={items} setItems={setItems} id={id} user={user} title={title}/>
+    </div>
   )
 }
 

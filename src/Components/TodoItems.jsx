@@ -1,22 +1,20 @@
 import React,{useState} from 'react';
-import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 
 const Todoitems = (props) => {
  const [line,setLine] = useState(false);
- const CutIt = () => {
+ const CutIt = (e) => {
     setLine(!line);
+    props.deleteItems(e.target.value)
  };
     return (
         <div>
             
-            <li style={{ textDecoration: line ? "line-through" : "none" }} >
+            <li className='item' style={{ textDecoration: line ? "line-through" : "none" }} >
                 <span onClick={CutIt}>
-                    <input type="checkbox" ></input>
+                    <input className='check-box' type="checkbox" value={props.id} ></input>
                 </span>
-                {props.text}
-                <HighlightOffTwoToneIcon onClick ={() => {
-                props.onSelect(props.id);
-                }} />
+                <p className="item-text">{props.text}</p>
+                
             </li>
         </div>
     );

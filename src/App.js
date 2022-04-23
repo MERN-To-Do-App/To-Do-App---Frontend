@@ -11,7 +11,6 @@ import { Redirect } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null);
-
   return (
     <Router>
       <Switch>
