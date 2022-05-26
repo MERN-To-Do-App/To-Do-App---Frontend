@@ -15,6 +15,10 @@ function LoginPage(props) {
     const userinfo = {
       email: email,
       password: pass,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
     };
 
     axios

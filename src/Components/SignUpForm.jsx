@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {Link, useHistory} from 'react-router-dom'
+import { Link, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,35 +10,39 @@ function SignUpForm(props) {
   const [pass, setPass] = useState("");
   const [confpass, setconfPass] = useState("");
 
-
-  const history = useHistory()
+  const history = useHistory();
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const userinfo = {
       name: name,
       email: email,
       password: pass,
-      confirmPassword: confpass
+      confirmPassword: confpass,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
     };
 
-    axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/signUp`, userinfo)
-    .then((res) => {
-      const id = res.data.user._id
-      props.setUser(res.data.user)
-      history.push(`/user/${id}`)
-    })
-    .catch((error)=>{
-      const errorMsg = error.response.data.msg
-      toast.error(errorMsg, {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
+    axios
+      .post(`${process.env.REACT_APP_API_ENDPOINT}/api/signUp`, userinfo)
+      .then((res) => {
+        const id = res.data.user._id;
+        props.setUser(res.data.user);
+        history.push(`/user/${id}`);
+      })
+      .catch((error) => {
+        const errorMsg = error.response.data.msg;
+        toast.error(errorMsg, {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
         });
-    })
+      });
 
     setName("");
     setEmail("");
@@ -82,7 +86,7 @@ function SignUpForm(props) {
           className="form-control form-control-sm"
           type="Password"
           value={confpass}
-          onChange={e=>setconfPass(e.target.value)}
+          onChange={(e) => setconfPass(e.target.value)}
           placeholder="Confirm Password"
           required
         />
@@ -96,10 +100,7 @@ function SignUpForm(props) {
         <div className="form-row">
           <div className="form-group col-md-12 foot-text">
             <p>
-              Already have an account ?
-              <Link to="/login">
-                Login
-              </Link>
+              Already have an account ?<Link to="/login">Login</Link>
             </p>
           </div>
         </div>
