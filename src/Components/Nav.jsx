@@ -10,15 +10,22 @@ function Nav({ setUser }) {
   return (
     <div>
       <nav className="navbar nav-top navbar-expand-lg">
-        <Link
-          className="brand-name nav-link active"
-          aria-current="page"
-          to={`/user/${id}`}
-        >
-          To Do
-        </Link>
+        <div className="brand">
+          <img
+            src="/images/ToDoIcon.png"
+            alt="logo"
+            className="brand-image"
+          />
+          <Link
+            className="brand-name nav-link active"
+            aria-current="page"
+            to={`/user/${id}`}
+          >
+            To Do
+          </Link>
+        </div>
         <div className="nav-elements">
-          <Clock/>
+          <Clock />
           <Link
             className="nav-element-item nav-link"
             aria-current="page"

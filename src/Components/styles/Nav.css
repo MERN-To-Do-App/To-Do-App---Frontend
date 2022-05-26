@@ -5,10 +5,24 @@
     border-bottom: 4px solid #202047;
 }
 
+.brand{
+    display: flex;
+    align-items: center;
+    margin-left: 0.75rem;
+}
+
+.brand-image{
+    width: 2rem;
+}
+
 .brand-name{
-    color: #000;
+    color: #1c5b92;
     font-size: 1.4rem;
     font-weight: 500;
+}
+
+.brand-name:hover{
+    color: #000;
 }
 
 .nav-elements{
@@ -22,4 +36,8 @@
     color: #222;
     font-size: 1.1rem;
     font-family: 'Barlow Condensed', sans-serif;
+}
+
+.nav-element-item:hover{
+    color: #1c5b92;
 }

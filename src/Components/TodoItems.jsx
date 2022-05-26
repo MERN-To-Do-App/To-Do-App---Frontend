@@ -16,6 +16,7 @@ const Todoitems = (props) => {
                 <p className="item-text">{props.text}</p>
                 
             </li>
+            <hr className='lines'/>
         </div>
     );
 }
